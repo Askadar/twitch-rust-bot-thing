@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  # Redis + redis browser
+  session-store:
+    image: redis:6.2
+    restart: unless-stopped
+    command: ['redis-server', '--bind', 'session-store', '--port', '6379']
+    ports:
+      - 6379:6379
+
+  # Outside connections
+  # ssh:
+  #   image: panubo/sshd
+  #   restart: unless-stopped
+  #   ports:
+  #     - 2222:22
+  #   environment:
+  #     SSH_USERS: spider:1000:1000
+  #     TCP_FORWARDING: true
+  #   volumes:
+  #     - $PWD/docker.authorized_keys:/etc/authorized_keys/spider
+
+networks:
+  default:
+    # external: true
+    name: test-bot-public
